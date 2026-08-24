@@ -1,0 +1,373 @@
+/* Variables & reset */
+:root {
+  --ink: #1B1917;
+  --paper: #F7F4EE;
+  --clay: #9E4B2E;
+  --stone: #8C857A;
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body: "Source Serif 4", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Header — the CTA is persistent, not gated behind a last page */
+.site-header {
+  padding: 28px 0;
+}
+
+.site-header .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.mark svg {
+  display: block;
+}
+
+/* Nav — sits between the mark and the CTA */
+.site-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.site-nav a {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--stone);
+  text-decoration: none;
+}
+
+.site-nav a.current {
+  color: var(--ink);
+}
+
+.cta {
+  margin-left: auto;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--clay);
+  padding: 9px 16px;
+  border-radius: 2px;
+  transition: opacity 120ms ease;
+}
+
+.cta:hover {
+  opacity: 0.88;
+}
+
+.cta:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Main — shared layout; vertical centring is scoped to the home page */
+main {
+  flex: 1 0 auto;
+  padding: 64px 0;
+}
+
+body.home main {
+  display: flex;
+  align-items: center;
+}
+
+/* Hero (home page only) */
+.eyebrow {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin: 0 0 20px;
+}
+
+h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(30px, 5.2vw, 46px);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  margin: 0 0 22px;
+  max-width: 20ch;
+}
+
+.support {
+  margin: 0 0 32px;
+  max-width: 46ch;
+  color: var(--ink);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--clay);
+  width: 48px;
+  margin: 0 0 28px;
+}
+
+/* Proof strip (home page only) */
+.proof-strip {
+  display: flex;
+  gap: 32px;
+  margin: 0 0 28px;
+}
+
+.proof-number {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.proof-label {
+  margin: 4px 0 0;
+  color: var(--stone);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.proof-date {
+  margin: 0 0 28px;
+  color: var(--stone);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.status {
+  font-size: 15px;
+  color: var(--stone);
+  max-width: 46ch;
+  margin: 0;
+}
+
+/* Case study (work page) */
+.standfirst {
+  margin: 0 0 32px;
+  color: var(--ink);
+  font-size: 21px;
+}
+
+.case-section {
+  margin-top: 64px;
+}
+
+.case-section p {
+  margin: 0;
+}
+
+.case-study h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 16px;
+}
+
+.retro {
+  font-style: italic;
+  color: var(--stone);
+  font-size: 18px;
+}
+
+.case-figure {
+  margin: 32px 0 0;
+}
+
+.case-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(140, 133, 122, 0.28);
+}
+
+.case-figure figcaption {
+  margin-top: 8px;
+  color: var(--stone);
+  font-size: 15px;
+}
+
+.case-cta {
+  margin-top: 64px;
+  text-align: center;
+}
+
+.case-cta-line {
+  margin: 0 0 20px;
+}
+
+/* About page */
+.about-intro {
+  display: flow-root;
+}
+
+.portrait {
+  float: left;
+  width: 180px;
+  height: 180px;
+  margin: 0 24px 16px 0;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.about-intro p {
+  margin: 0 0 20px;
+}
+
+.about-intro p:last-child {
+  margin-bottom: 0;
+}
+
+.fact-list {
+  list-style: none;
+  padding: 0;
+  color: var(--stone);
+  font-size: 15px;
+}
+
+.fact-list li {
+  margin: 0 0 8px;
+}
+
+.fact-list li:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 559px) {
+  .portrait {
+    float: none;
+    margin: 0 0 20px;
+  }
+}
+
+/* Contact page */
+.cta-large {
+  display: inline-block;
+  margin: 0 0 32px;
+  font-size: 16px;
+  padding: 14px 28px;
+}
+
+.contact-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--stone);
+  font-size: 14px;
+}
+
+.contact-links a {
+  color: var(--stone);
+  text-decoration: none;
+}
+
+.contact-links a:hover {
+  color: var(--clay);
+}
+
+.status a {
+  color: var(--clay);
+}
+
+.status a:hover {
+  opacity: 0.88;
+}
+
+/* Footer */
+.site-footer {
+  padding: 28px 0 36px;
+  font-family: var(--display);
+  font-size: 13px;
+  color: var(--stone);
+}
+
+.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(140, 133, 122, 0.28);
+  padding-top: 18px;
+}
+
+.site-footer a {
+  color: var(--stone);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--clay);
+}
+
+/* Responsive */
+@media (max-width: 559px) {
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .proof-strip {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 17px;
+  }
+
+  main {
+    padding: 40px 0;
+  }
+}
