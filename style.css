@@ -254,6 +254,16 @@ h1 {
   border: 1px solid rgba(140, 133, 122, 0.28);
 }
 
+.dual-figure {
+  aspect-ratio: 1920 / 1029;
+}
+
+@media (max-width: 640px) {
+  .dual-figure {
+    aspect-ratio: 828 / 1524;
+  }
+}
+
 .case-figure figcaption {
   margin-top: 8px;
   color: var(--stone);
