@@ -3,9 +3,33 @@
   --ink: #1B1917;
   --paper: #F7F4EE;
   --clay: #9E4B2E;
-  --stone: #8C857A;
+  --stone: #726D63;
   --display: "Bricolage Grotesque", system-ui, sans-serif;
   --body: "Source Serif 4", Georgia, serif;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/bricolage-grotesque-var.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/source-serif-4-var.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/source-serif-4-italic-var.woff2") format("woff2");
 }
 
 * {
@@ -161,6 +185,7 @@ h1 {
 }
 
 .proof-number {
+  margin: 0;
   font-family: var(--display);
   font-weight: 600;
   font-size: 28px;
@@ -240,6 +265,10 @@ h1 {
   text-align: center;
 }
 
+body.work .case-cta {
+  text-align: left;
+}
+
 .case-cta-line {
   margin: 0 0 20px;
 }
@@ -307,6 +336,8 @@ h1 {
 }
 
 .contact-links a {
+  display: inline-block;
+  padding: 12px 0;
   color: var(--stone);
   text-decoration: none;
 }
@@ -341,6 +372,8 @@ h1 {
 }
 
 .site-footer a {
+  display: inline-block;
+  padding: 12px 0;
   color: var(--stone);
   text-decoration: none;
 }
@@ -350,15 +383,17 @@ h1 {
 }
 
 /* Responsive */
+@media (max-width: 640px) {
+  .proof-strip {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 @media (max-width: 559px) {
   .site-nav {
     order: 3;
     flex-basis: 100%;
-  }
-
-  .proof-strip {
-    flex-direction: column;
-    gap: 16px;
   }
 }
 
