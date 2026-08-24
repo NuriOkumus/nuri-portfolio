@@ -54,7 +54,7 @@
       <div class="proof-strip">
         <div class="proof-item">
           <p class="proof-number" data-proof="nodes">5</p>
-          <p class="proof-label">Nodes, all ready</p>
+          <p class="proof-label" data-proof-label="nodes">Nodes, all ready</p>
         </div>
         <div class="proof-item">
           <p class="proof-number" data-proof="uptime">56</p>
@@ -62,7 +62,7 @@
         </div>
         <div class="proof-item">
           <p class="proof-number" data-proof="apps">15</p>
-          <p class="proof-label">Services running</p>
+          <p class="proof-label">Apps synced &amp; healthy</p>
         </div>
       </div>
       <p class="proof-date" data-proof="date">Measured 14 August 2026</p>
@@ -125,13 +125,19 @@
           if (nowMs - generatedMs > STALE_MS) return;
 
           var nodesEl = document.querySelector('[data-proof="nodes"]');
+          var nodesLabelEl = document.querySelector('[data-proof-label="nodes"]');
           var uptimeEl = document.querySelector('[data-proof="uptime"]');
           var appsEl = document.querySelector('[data-proof="apps"]');
           var dateEl = document.querySelector('[data-proof="date"]');
-          if (!nodesEl || !uptimeEl || !appsEl || !dateEl) return;
+          if (!nodesEl || !nodesLabelEl || !uptimeEl || !appsEl || !dateEl) return;
 
           var nodes = data.nodes;
-          nodesEl.textContent = nodes.ready === nodes.total ? String(nodes.ready) : nodes.ready + '/' + nodes.total;
+          if (nodes.ready === nodes.total) {
+            nodesEl.textContent = String(nodes.ready);
+          } else {
+            nodesEl.textContent = nodes.ready + '/' + nodes.total;
+            nodesLabelEl.textContent = 'Nodes ready';
+          }
 
           var apps = data.applications;
           appsEl.textContent = apps.synced_healthy === apps.total ? String(apps.synced_healthy) : apps.synced_healthy + '/' + apps.total;
