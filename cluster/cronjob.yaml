@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: portfolio-status
+  namespace: platform
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 120
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: portfolio-status
+          restartPolicy: OnFailure
+          containers:
+          - name: portfolio-status
+            image: alpine/k8s:1.30.5
+            env:
+            - name: STATUS_ENDPOINT
+              value: "https://nuri-portfolio.vercel.app/api/cluster-status"
+            - name: INGEST_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: portfolio-status-token
+                  key: token
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                cpu: 200m
+                memory: 128Mi
+            command: ["/bin/bash", "-c"]
+            args:
+            - |
+              set -euo pipefail
+
+              nodes_json=$(kubectl get nodes -o json)
+              ready_count=$(echo "$nodes_json" | jq '[.items[] | select(any(.status.conditions[]?; .type=="Ready" and .status=="True"))] | length')
+              total_nodes=$(echo "$nodes_json" | jq '.items | length')
+              oldest_node=$(echo "$nodes_json" | jq -r '[.items[].metadata.creationTimestamp] | min')
+
+              apps_json=$(kubectl get applications.argoproj.io -A -o json)
+              synced_healthy=$(echo "$apps_json" | jq '[.items[] | select(.status.sync.status=="Synced" and .status.health.status=="Healthy")] | length')
+              total_apps=$(echo "$apps_json" | jq '.items | length')
+
+              generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+              payload=$(jq -n \
+                --arg generated_at "$generated_at" \
+                --argjson ready "$ready_count" \
+                --argjson total "$total_nodes" \
+                --arg oldest "$oldest_node" \
+                --argjson synced_healthy "$synced_healthy" \
+                --argjson apps_total "$total_apps" \
+                '{generated_at: $generated_at, nodes: {ready: $ready, total: $total}, oldest_node_created_at: $oldest, applications: {synced_healthy: $synced_healthy, total: $apps_total}}')
+
+              http_status=$(curl -s -o /dev/null -w '%{http_code}' -X POST "$STATUS_ENDPOINT" \
+                -H "Authorization: Bearer $INGEST_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d "$payload")
+
+              if [ "$http_status" -lt 200 ] || [ "$http_status" -ge 300 ]; then
+                echo "push failed with status $http_status" >&2
+                exit 1
+              fi
+
+              echo "push succeeded with status $http_status"
