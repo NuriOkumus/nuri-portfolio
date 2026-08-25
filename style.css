@@ -230,6 +230,10 @@ h1 {
   margin: 0;
 }
 
+.case-section p + p {
+  margin-top: 16px;
+}
+
 .case-study h2 {
   font-family: var(--display);
   font-weight: 600;
@@ -247,7 +251,8 @@ h1 {
   margin: 32px 0 0;
 }
 
-.case-figure img {
+.case-figure img,
+.case-figure svg {
   display: block;
   width: 100%;
   height: auto;

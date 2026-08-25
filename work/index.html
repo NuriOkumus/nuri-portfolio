@@ -45,9 +45,105 @@
     <div class="wrap">
       <article class="case-study">
         <h1>Building a department its own deployment platform</h1>
-        <p class="standfirst">Five nodes, a full GitOps pipeline, and a permission negotiation at every step.</p>
+        <p class="standfirst">One client, one live engagement, three capabilities I own end to end.</p>
 
-        <!-- IMAGE SLOT: architecture diagram -->
+        <figure class="case-figure">
+          <svg viewBox="0 0 672 570" role="img"
+            aria-label="Delivery pipeline into the cluster: Gitea pushes manifests directly to ArgoCD and triggers Gitea Actions, which builds images and pushes them to the Zot registry for ArgoCD to apply; the cluster is a bounded region of five nodes, one clay-filled control plane and four unfilled workers, with Traefik on the boundary as the single ingress receiving traffic from se.mu.edu.tr.">
+            <style>
+              #arch-diagram text { font-family: "Bricolage Grotesque", system-ui, sans-serif; fill: #1B1917; }
+              #arch-diagram .arch-box, #arch-diagram .arch-boundary, #arch-diagram .arch-worker, #arch-diagram .arch-line { fill: none; stroke: #1B1917; stroke-width: 2; }
+              #arch-diagram .arch-cp { fill: #9E4B2E; stroke: none; }
+              #arch-diagram .arch-label { font-size: 16px; text-anchor: middle; }
+              #arch-diagram .arch-tag { font-size: 13px; }
+              #arch-diagram .arch-flow-mobile { display: none; }
+              @media (max-width: 480px) {
+                #arch-diagram .arch-flow-desktop { display: none; }
+                #arch-diagram .arch-flow-mobile { display: block; }
+                #arch-diagram .arch-label { font-size: 22px; }
+                #arch-diagram .arch-tag { font-size: 16px; }
+              }
+            </style>
+
+            <g id="arch-diagram">
+              <marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 Z" fill="#1B1917" />
+              </marker>
+
+              <!-- Desktop delivery path: four equal-width boxes, Gitea -> Gitea Actions -> Zot -> ArgoCD -->
+              <g class="arch-flow-desktop">
+                <rect class="arch-box" x="13" y="90" width="138" height="48" rx="8" />
+                <text class="arch-label" x="82" y="118">Gitea</text>
+
+                <rect class="arch-box" x="181" y="90" width="138" height="48" rx="8" />
+                <text class="arch-label" x="250" y="118">Gitea Actions</text>
+
+                <rect class="arch-box" x="349" y="90" width="138" height="48" rx="8" />
+                <text class="arch-label" x="418" y="118">Zot</text>
+
+                <rect class="arch-box" x="517" y="90" width="138" height="48" rx="8" />
+                <text class="arch-label" x="586" y="118">ArgoCD</text>
+
+                <line class="arch-line" x1="151" y1="114" x2="179" y2="114" marker-end="url(#arch-arrow)" />
+                <line class="arch-line" x1="319" y1="114" x2="347" y2="114" marker-end="url(#arch-arrow)" />
+                <line class="arch-line" x1="487" y1="114" x2="515" y2="114" marker-end="url(#arch-arrow)" />
+
+                <path class="arch-line" d="M82,88 L82,40 L586,40 L586,88" marker-end="url(#arch-arrow)" />
+                <text class="arch-tag" x="334" y="30" text-anchor="middle">manifests</text>
+
+                <text class="arch-tag" x="418" y="152" text-anchor="middle">images</text>
+
+                <path class="arch-line" d="M586,138 L586,344 L364,344" marker-end="url(#arch-arrow)" />
+                <text class="arch-tag" x="594" y="241" text-anchor="start">applies</text>
+              </g>
+
+              <!-- Mobile delivery path: same four steps, reflowed into a 2x2 grid -->
+              <g class="arch-flow-mobile">
+                <rect class="arch-box" x="60" y="13" width="220" height="54" rx="8" />
+                <text class="arch-label" x="170" y="45" text-anchor="middle">Gitea</text>
+
+                <rect class="arch-box" x="392" y="13" width="220" height="54" rx="8" />
+                <text class="arch-label" x="502" y="45" text-anchor="middle">Gitea Actions</text>
+
+                <rect class="arch-box" x="392" y="123" width="220" height="54" rx="8" />
+                <text class="arch-label" x="502" y="155" text-anchor="middle">Zot</text>
+
+                <rect class="arch-box" x="60" y="123" width="220" height="54" rx="8" />
+                <text class="arch-label" x="170" y="155" text-anchor="middle">ArgoCD</text>
+
+                <line class="arch-line" x1="280" y1="40" x2="390" y2="40" marker-end="url(#arch-arrow)" />
+                <line class="arch-line" x1="502" y1="69" x2="502" y2="121" marker-end="url(#arch-arrow)" />
+                <line class="arch-line" x1="390" y1="150" x2="282" y2="150" marker-end="url(#arch-arrow)" />
+
+                <path class="arch-line" d="M58,40 L28,40 L28,150 L58,150" marker-end="url(#arch-arrow)" />
+                <text class="arch-tag" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">manifests</text>
+
+                <text class="arch-tag" x="514" y="99" text-anchor="start">images</text>
+
+                <path class="arch-line" d="M170,179 L170,344 L310,344" marker-end="url(#arch-arrow)" />
+                <text class="arch-tag" x="178" y="261" text-anchor="start">applies</text>
+              </g>
+
+              <!-- Cluster: shared between both layouts -->
+              <g class="arch-cluster">
+                <rect class="arch-boundary" x="16" y="274" width="640" height="270" rx="14" />
+
+                <line class="arch-line" x1="378" y1="229" x2="378" y2="252" marker-end="url(#arch-arrow)" />
+                <text class="arch-tag" x="378" y="222" text-anchor="middle">se.mu.edu.tr</text>
+
+                <rect class="arch-box" x="338" y="254" width="80" height="40" rx="6" style="fill: #F7F4EE;" />
+                <text class="arch-tag" x="378" y="278" text-anchor="middle">Traefik</text>
+
+                <circle class="arch-cp" cx="336" cy="344" r="26" />
+                <circle class="arch-worker" cx="96" cy="474" r="18" />
+                <circle class="arch-worker" cx="258" cy="474" r="18" />
+                <circle class="arch-worker" cx="420" cy="474" r="18" />
+                <circle class="arch-worker" cx="582" cy="474" r="18" />
+              </g>
+            </g>
+          </svg>
+          <figcaption>How a commit reaches the cluster.</figcaption>
+        </figure>
 
         <section class="case-section">
           <hr class="rule">
@@ -61,19 +157,23 @@
           <hr class="rule">
           <h2>What I did</h2>
           <p>Nobody asked me to do this. A new DevOps lab was being set up, so I went to my professors and proposed
-            that this be its backbone. They agreed on the spot. I built a five-node K3s cluster. A student pushes
-            code to Gitea and writes their manifests; ArgoCD watches the repo and applies them to the cluster. If an
-            image needs building, Gitea Actions builds it and pushes it to Zot.</p>
+            that this be its backbone. They agreed on the spot. I built a five-node K3s cluster &mdash; one control
+            plane, four workers &mdash; and the delivery pipeline on top of it.</p>
         </section>
 
         <section class="case-section">
           <hr class="rule">
-          <h2>Cluster operations</h2>
-          <p>Five nodes, 56 days of uptime, 15 services. I am the only person who keeps them up. The failure I spent
-            the longest on: Overleaf sat in CrashLoopBackOff for two days while MongoDB reported Running and Ready
-            the whole time. The MongoDB pod had restarted with a new IP, and the replica set config on disk still
-            listed the old one, so mongod could not find itself in its own replica set and no primary was ever
-            elected. The readiness probe only pinged the port, so it never noticed.</p>
+          <h2>Capability 1 &mdash; Cluster operations</h2>
+          <p>Five nodes, running continuously since June 2026. I am the one who gets called when something breaks.
+            The failure worth describing: Overleaf, which the faculty actually uses, sat in CrashLoopBackOff for two
+            days. The MongoDB pod showed Running and Ready the whole time, which is what made it hard &mdash; the
+            obvious check said everything was fine. The real cause was that the MongoDB pod had restarted and taken a
+            new IP, while the replica set config persisted on disk with the old one. mongod could not find itself in
+            its own replica set, so no primary was ever elected, so Overleaf could not open a transaction, so it
+            crashed on startup. The readiness probe was only pinging the port, not checking replica set state &mdash;
+            so it reported healthy on a database that could not serve a write.</p>
+          <p>The permanent fix was to make the probe check what the application actually depends on, and to verify it
+            by deleting the pod on purpose to confirm the repair survives an IP change.</p>
           <figure class="case-figure">
             <picture>
               <source srcset="/img/nodes.webp" type="image/webp">
@@ -87,21 +187,32 @@
 
         <section class="case-section">
           <hr class="rule">
-          <h2>GitOps delivery</h2>
-          <p>Every service on the cluster is defined in Git. A student writes manifests, ArgoCD reconciles them, and
-            nothing reaches the cluster by hand. Gitea Actions builds images and pushes them to the Zot registry
-            running on the same cluster.</p>
-          <!-- IMAGE SLOT: Gitea manifest tree capture -->
+          <h2>Capability 2 &mdash; GitOps delivery</h2>
+          <p>A student pushes code to Gitea and writes their manifests. ArgoCD watches the repo and applies them to
+            the cluster. If an image needs building, Gitea Actions builds it and pushes it to Zot, the in-cluster OCI
+            registry. Nothing is applied to the cluster by hand &mdash; the repo is the source of truth, and anything
+            that drifts from it gets reconciled back.</p>
+          <figure class="case-figure">
+            <picture>
+              <source srcset="/img/gitea-manifest-tree.webp" type="image/webp">
+              <img src="/img/gitea-manifest-tree.png"
+                alt="Gitea file browser for the se_web repository's k8s folder, listing the argocd-app, certificate, deployment, ingressroute, and namespace manifests, with a CI Bot commit that just updated the deployment image"
+                width="1344" height="620" loading="lazy">
+            </picture>
+            <figcaption>The k8s manifests in Gitea &mdash; the source ArgoCD watches.</figcaption>
+          </figure>
         </section>
 
         <section class="case-section">
           <hr class="rule">
-          <h2>Networking and mail</h2>
-          <p>The hardest part was not technical. Working inside the university network meant getting node IPs
-            pinned, arranging external access, and talking to campus IT every time something was blocked at the
-            network layer. On my own server this would have taken a fraction of the time. Here every step was a
-            permission and a conversation &mdash; which is also the job, if the infrastructure already belongs to
-            someone else.</p>
+          <h2>Capability 3 &mdash; Networking and mail</h2>
+          <p>DNS, ingress, certificates, egress and SMTP, all inside a university network I do not control. Traefik
+            terminates everything at the edge and routes internally; cert-manager handles certificates.</p>
+          <p>The hard part was not technical. Every step was a permission and a conversation: node IPs pinned, ports
+            opened for external access, an exemption from the campus captive portal so a 24/7 service is not logged
+            out by a periodic re-authentication. On my own server this would have taken a fraction of the time. Here
+            it took a written request for each one &mdash; which is also the job, if the infrastructure already
+            belongs to someone else.</p>
         </section>
 
         <section class="case-section">

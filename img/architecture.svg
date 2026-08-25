@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 570">
+  <style>
+    #arch-diagram text { font-family: "Bricolage Grotesque", system-ui, sans-serif; fill: #1B1917; }
+    #arch-diagram .arch-box, #arch-diagram .arch-boundary, #arch-diagram .arch-worker, #arch-diagram .arch-line { fill: none; stroke: #1B1917; stroke-width: 2; }
+    #arch-diagram .arch-cp { fill: #9E4B2E; stroke: none; }
+    #arch-diagram .arch-label { font-size: 16px; text-anchor: middle; }
+    #arch-diagram .arch-tag { font-size: 13px; }
+    #arch-diagram .arch-flow-mobile { display: none; }
+    @media (max-width: 480px) {
+      #arch-diagram .arch-flow-desktop { display: none; }
+      #arch-diagram .arch-flow-mobile { display: block; }
+      #arch-diagram .arch-label { font-size: 22px; }
+      #arch-diagram .arch-tag { font-size: 16px; }
+    }
+  </style>
+
+  <g id="arch-diagram">
+    <marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1B1917" />
+    </marker>
+
+    <!-- Desktop delivery path: four equal-width boxes, Gitea -> Gitea Actions -> Zot -> ArgoCD -->
+    <g class="arch-flow-desktop">
+      <rect class="arch-box" x="13" y="90" width="138" height="48" rx="8" />
+      <text class="arch-label" x="82" y="118">Gitea</text>
+
+      <rect class="arch-box" x="181" y="90" width="138" height="48" rx="8" />
+      <text class="arch-label" x="250" y="118">Gitea Actions</text>
+
+      <rect class="arch-box" x="349" y="90" width="138" height="48" rx="8" />
+      <text class="arch-label" x="418" y="118">Zot</text>
+
+      <rect class="arch-box" x="517" y="90" width="138" height="48" rx="8" />
+      <text class="arch-label" x="586" y="118">ArgoCD</text>
+
+      <line class="arch-line" x1="151" y1="114" x2="179" y2="114" marker-end="url(#arch-arrow)" />
+      <line class="arch-line" x1="319" y1="114" x2="347" y2="114" marker-end="url(#arch-arrow)" />
+      <line class="arch-line" x1="487" y1="114" x2="515" y2="114" marker-end="url(#arch-arrow)" />
+
+      <path class="arch-line" d="M82,88 L82,40 L586,40 L586,88" marker-end="url(#arch-arrow)" />
+      <text class="arch-tag" x="334" y="30" text-anchor="middle">manifests</text>
+
+      <text class="arch-tag" x="418" y="152" text-anchor="middle">images</text>
+
+      <path class="arch-line" d="M586,138 L586,344 L364,344" marker-end="url(#arch-arrow)" />
+      <text class="arch-tag" x="594" y="241" text-anchor="start">applies</text>
+    </g>
+
+    <!-- Mobile delivery path: same four steps, reflowed into a 2x2 grid -->
+    <g class="arch-flow-mobile">
+      <rect class="arch-box" x="60" y="13" width="220" height="54" rx="8" />
+      <text class="arch-label" x="170" y="45" text-anchor="middle">Gitea</text>
+
+      <rect class="arch-box" x="392" y="13" width="220" height="54" rx="8" />
+      <text class="arch-label" x="502" y="45" text-anchor="middle">Gitea Actions</text>
+
+      <rect class="arch-box" x="392" y="123" width="220" height="54" rx="8" />
+      <text class="arch-label" x="502" y="155" text-anchor="middle">Zot</text>
+
+      <rect class="arch-box" x="60" y="123" width="220" height="54" rx="8" />
+      <text class="arch-label" x="170" y="155" text-anchor="middle">ArgoCD</text>
+
+      <line class="arch-line" x1="280" y1="40" x2="390" y2="40" marker-end="url(#arch-arrow)" />
+      <line class="arch-line" x1="502" y1="69" x2="502" y2="121" marker-end="url(#arch-arrow)" />
+      <line class="arch-line" x1="390" y1="150" x2="282" y2="150" marker-end="url(#arch-arrow)" />
+
+      <path class="arch-line" d="M58,40 L28,40 L28,150 L58,150" marker-end="url(#arch-arrow)" />
+      <text class="arch-tag" x="16" y="95" text-anchor="middle" transform="rotate(-90 16 95)">manifests</text>
+
+      <text class="arch-tag" x="514" y="99" text-anchor="start">images</text>
+
+      <path class="arch-line" d="M170,179 L170,344 L310,344" marker-end="url(#arch-arrow)" />
+      <text class="arch-tag" x="178" y="261" text-anchor="start">applies</text>
+    </g>
+
+    <!-- Cluster: shared between both layouts -->
+    <g class="arch-cluster">
+      <rect class="arch-boundary" x="16" y="274" width="640" height="270" rx="14" />
+
+      <line class="arch-line" x1="378" y1="229" x2="378" y2="252" marker-end="url(#arch-arrow)" />
+      <text class="arch-tag" x="378" y="222" text-anchor="middle">se.mu.edu.tr</text>
+
+      <rect class="arch-box" x="338" y="254" width="80" height="40" rx="6" style="fill: #F7F4EE;" />
+      <text class="arch-tag" x="378" y="278" text-anchor="middle">Traefik</text>
+
+      <circle class="arch-cp" cx="336" cy="344" r="26" />
+      <circle class="arch-worker" cx="96" cy="474" r="18" />
+      <circle class="arch-worker" cx="258" cy="474" r="18" />
+      <circle class="arch-worker" cx="420" cy="474" r="18" />
+      <circle class="arch-worker" cx="582" cy="474" r="18" />
+    </g>
+  </g>
+</svg>
